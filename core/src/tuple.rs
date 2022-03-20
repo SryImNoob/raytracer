@@ -1,19 +1,29 @@
-use std::ops::{Add, Sub, Neg, Mul, Div};
+use std::ops::{Add, Div, Mul, Neg, Sub};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub struct Tuple(f32,f32,f32,f32);
+pub struct Tuple(f32, f32, f32, f32);
 
 impl Add for Tuple {
     type Output = Self;
     fn add(self, other: Self) -> Self {
-        Self(self.0 + other.0, self.1 + other.1, self.2 + other.2, self.3 + other.3)
+        Self(
+            self.0 + other.0,
+            self.1 + other.1,
+            self.2 + other.2,
+            self.3 + other.3,
+        )
     }
 }
 
 impl Sub for Tuple {
     type Output = Self;
     fn sub(self, other: Self) -> Self {
-        Self(self.0 - other.0, self.1 - other.1, self.2 - other.2, self.3 - other.3)
+        Self(
+            self.0 - other.0,
+            self.1 - other.1,
+            self.2 - other.2,
+            self.3 - other.3,
+        )
     }
 }
 
@@ -21,7 +31,6 @@ impl Neg for Tuple {
     type Output = Self;
     fn neg(self) -> Self::Output {
         Self(-self.0, -self.1, -self.2, -self.3)
-
     }
 }
 
@@ -39,32 +48,36 @@ impl Div<f32> for Tuple {
     }
 }
 
-pub fn point(x : f32, y : f32, z : f32) -> Tuple {
+pub fn point(x: f32, y: f32, z: f32) -> Tuple {
     return Tuple(x, y, z, 1.0);
 }
 
-pub fn vector(x : f32, y : f32, z : f32) -> Tuple {
+pub fn vector(x: f32, y: f32, z: f32) -> Tuple {
     return Tuple(x, y, z, 0.0);
 }
 
-pub fn isVector(v:Tuple) -> bool {
+pub fn is_vector(v: Tuple) -> bool {
     return v.3 == 0.0;
 }
 
-pub fn magnitude(v : Tuple) -> f32 {
+pub fn magnitude(v: Tuple) -> f32 {
     return f32::sqrt(v.0 * v.0 + v.1 * v.1 + v.2 * v.2 + v.3 * v.3);
 }
 
-pub fn normalize(v : Tuple) -> Tuple {
-    return v / magnitude(v); 
+pub fn normalize(v: Tuple) -> Tuple {
+    return v / magnitude(v);
 }
 
-pub fn dot(a:Tuple, b:Tuple) -> f32 {
+pub fn dot(a: Tuple, b: Tuple) -> f32 {
     return a.0 * b.0 + a.1 * b.1 + a.2 * b.2 + a.3 * b.3;
 }
 
-pub fn cross(a:Tuple, b:Tuple) -> Tuple {
-    return vector(a.1 * b.2 - a.2 * b.1, a.2 * b.0 - a.0 * b.2, a.0 * b.1 - a.1 * b.0);
+pub fn cross(a: Tuple, b: Tuple) -> Tuple {
+    return vector(
+        a.1 * b.2 - a.2 * b.1,
+        a.2 * b.0 - a.0 * b.2,
+        a.0 * b.1 - a.1 * b.0,
+    );
 }
 
 #[cfg(test)]
